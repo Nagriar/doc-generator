@@ -18,13 +18,13 @@ Si dans la liste des langages, le mot GEN est présent, tous les langages qui ne
 
 Remarque :
 
-  Regexp d'un fichier : [a-zA-Z0-9\_-.]\*
-  Regexp d'un nom de langage : [a-zA-Z]\*
+    Regexp d'un fichier : [a-zA-Z0-9\_-.]\*
+    Regexp d'un nom de langage : [a-zA-Z]\*
 
 Fichier de configuration
 ------------------------
 
-  {
+  `{
     "languages":[
       {"featuresLanguage":{"featureName":1}, ...
       "name":"name"
@@ -34,6 +34,6 @@ Fichier de configuration
     ]
     "generalDir":"generaldir"
     "templateFiles":{"featureName":"featureFile"}, ...
-  }
+  }`
 
 
