@@ -1,0 +1,12 @@
+{
+  "languages":[
+    {
+      "name":"ruby",
+      "featuresLanguage":{"feature1":"1"},
+      "referenceLanguage":"test/ruby/references",
+      "outputDir":"test/ruby/doc"
+    }
+  ],
+  "generalDir":"test/gendir",
+  "templateFiles":{"feature1":"test/templates/file1.doc"}
+}

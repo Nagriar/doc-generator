@@ -1,0 +1,11 @@
+Ruby
+====
+
+Test1
+-----
+
+Ceci est un test de génération de documentation de @@include{name.part}{ruby}.
+
+Et je pourrai aussi inclure @@include{code.part}.
+
+@@include{gen.part}{GEN}
