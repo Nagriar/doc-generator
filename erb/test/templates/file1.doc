@@ -9,3 +9,5 @@ Ceci est un test de génération de documentation de <%= import("name.part", ["r
 Et je pourrai aussi inclure <%= import("code.part", []) %>.
 
 <%= import("gen.part", ["GEN"]) %>
+
+<%= importFeature("erb.part", "erb", ["GEN"]) %>
