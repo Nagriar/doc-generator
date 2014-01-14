@@ -1,0 +1,1 @@
+42sh> ruby doc-generator.rb config.json
