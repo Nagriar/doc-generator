@@ -73,7 +73,6 @@ class Generator
       templateData = File.read(featureFileIn)
       @config["languages"].each do |language|
         lang = Language.new(language, @config["generalDir"])
-        lang.printContent
         template = ERB.new(templateData)
         fileOut = File.join(lang.outputDir, File.basename(featureFileIn))
         File.write(fileOut, template.result(lang.get_binding))

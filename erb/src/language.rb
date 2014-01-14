@@ -20,8 +20,8 @@ class Language
     puts "outputDir : #{@outputDir}"
   end
 
-  def haveFeature(name)
-    @config["templateFiles"].each do |featureName, featureFileIn|
+  def haveFeature?(name)
+    @featuresLanguage.each do |featureName, featureFileIn|
       if featureName == name
         return true
       end
@@ -29,19 +29,26 @@ class Language
     return false
   end
 
-  def import(fileName, languages)
-    content = ""
-    if languages.empty? || languages.include?(@name)
-      fileName = File.join(@referenceLanguage, fileName)
-      content = File.read(fileName)
-      content = content[0, content.size - 1] #Remove \n
+  def importFile(fileName, dir)
+    fileName = File.join(dir, fileName)
+    content = File.read(fileName)
+    content = content[0, content.size - 1] #Remove \n
+  end
 
+  def import(fileName, languages)
+    if languages.empty? || languages.include?(@name)
+      return importFile(fileName, @referenceLanguage)
     elsif languages.include?("GEN")
-      fileName = File.join(@generalDir, fileName)
-      content = File.read(fileName)
-      content = content[0, content.size - 1] #Remove \n
+      return importFile(fileName, @generalDir)
+    else
+      return ""
     end
-    content
+  end
+
+  def importFeature(fileName, feature, languages)
+    if haveFeature?(feature)
+      import(fileName, languages)
+    end
   end
 
   def get_binding
