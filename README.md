@@ -23,6 +23,21 @@ Remarque :
     Regexp d'un fichier : [a-zA-Z0-9\_-.]\*
     Regexp d'un nom de langage : [a-zA-Z]\*
 
+Fichier de configuration
+------------------------
+
+  `{
+    "languages":[
+      {"featuresLanguage":{"featureName":1, ...}
+      "name":"name",
+      "referenceLanguage":"referencedir",
+      "outputDir":"outputdir"},
+      ...
+    ],
+    "generalDir":"generaldir",
+    "templateFiles":{"featureName":"featureFile", ...}
+  }`
+
 
 ERB
 ===
@@ -40,7 +55,7 @@ Fonctions supplémentaires
 ### Import
 
 
-    <%= import(fichier, [lang1, lang2...]) %>
+    <%= import(feature) %>
 
 Inclut un fichier sans le '\n' final à l'emplacement du import.
 
@@ -55,15 +70,18 @@ Fichier de configuration
 ------------------------
 
   `{
-    "languages":[
-      {"featuresLanguage":{"featureName":1}, ...
-      "name":"name"
-      "referenceLanguage":"referencedir"
+    "languages":{
+      "name" : {
+      "referenceLanguage":"referencedir",
       "outputDir":"outputdir"},
       ...
-    ]
-    "generalDir":"generaldir"
-    "templateFiles":{"featureName":"featureFile"}, ...
+    },
+    "generalDir":"generaldir",
+    "features":{
+      "feature1" : {"file":"feature1.part", languages:["lang1", "lang2", ...]},
+      ...
+    },
+    "templateFiles":{"featureName":"featureFile", ...}
   }`
 
 
