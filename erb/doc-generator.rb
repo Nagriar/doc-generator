@@ -22,9 +22,9 @@ class Generator
 
   def checkConfigTemplateFiles
     # prefer do/end block if multi-lines
-    @config["templateFiles"].each do |featureName, featureFileIn|
-      if featureFileIn == nil
-        puts "Error: nil value for \"#{featureName}\" file"
+    @config["templateFiles"].each do |templateName, templateFileIn|
+      if templateFileIn == nil
+        puts "Error: nil value for \"#{templateName}\" file"
         exit 2
       end
     end
@@ -62,8 +62,8 @@ class Generator
     checkConfigTemplateFiles
     checkConfigLanguages
     checkConfigFeature
-    if !File.directory?(@config["generalDir"])
-      puts "Warning : \"#{@config["generalDir"]}\" is not a directory"
+    if !File.directory?(@config["commonDir"])
+      puts "Warning : \"#{@config["commonDir"]}\" is not a directory"
     end
   end
 
@@ -80,7 +80,7 @@ class Generator
     @config["templateFiles"].each do |templateName, templateFileIn|
       templateData = File.read(templateFileIn)
       @config["languages"].each do |languageName, languageData|
-        lang = Language.new(languageName, languageData, @config["generalDir"], @config["features"])
+        lang = Language.new(languageName, languageData, @config["commonDir"], @config["features"])
         template = ERB.new(templateData)
         fileOut = File.join(lang.outputDir, File.basename(templateFileIn))
         File.write(fileOut, template.result(lang.get_binding))

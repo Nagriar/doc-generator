@@ -1,0 +1,12 @@
+{
+  "languages":[
+    {
+      "name":"ruby",
+      "featuresLanguage":{"feature1":"1"},
+      "referenceLanguage":"include/ruby/references",
+      "outputDir":"include/ruby/doc"
+    }
+  ],
+  "commonDir":"include/common",
+  "templateFiles":{"feature1":"include/templates/file1.doc"}
+}

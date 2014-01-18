@@ -5,12 +5,12 @@ class Language
   attr_reader :referenceLanguage
   attr_reader :outputDir
 
-  def initialize(languageName, languageData, generalDir, features)
+  def initialize(languageName, languageData, commonDir, features)
     @name = languageName
     @features = features
     @referenceLanguage = languageData["referenceLanguage"]
     @outputDir = languageData["outputDir"]
-    @generalDir = generalDir
+    @commonDir = commonDir
   end
 
   def printContent
@@ -38,7 +38,7 @@ class Language
     if @features[featureName]["languages"].empty? || @features[featureName]["languages"].include?(@name)
       return importFile(@features[featureName]["file"], @referenceLanguage)
     elsif @features[featureName]["languages"].include?("GEN")
-      return importFile(@features[featureName]["file"], @generalDir)
+      return importFile(@features[featureName]["file"], @commonDir)
     else
       return ""
     end
