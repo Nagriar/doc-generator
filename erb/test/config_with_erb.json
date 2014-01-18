@@ -1,12 +1,14 @@
 {
-  "languages":[
-    {
-      "name":"ruby",
-      "featuresLanguage":{"erb":"1"},
-      "referenceLanguage":"test/ruby/references",
-      "outputDir":"test/ruby/doc"
-    }
-  ],
+  "languages":{
+    "ruby": {"referenceLanguage":"test/ruby/references",
+      "outputDir":"test/ruby/doc"}
+  },
   "generalDir":"test/gendir",
-  "templateFiles":{"feature1":"test/templates/file1.doc"}
+  "features":{
+    "erb":{"file":"erb.part", "languages":["GEN"]},
+    "gen":{"file":"gen.part", "languages":["GEN"]},
+    "code":{"file":"code.part", "languages":[]},
+    "name":{"file":"name.part", "languages":["ruby"]}
+  },
+  "templateFiles":{"template1":"test/templates/file1.doc"}
 }

@@ -4,10 +4,10 @@ Ruby
 Test1
 -----
 
-Ceci est un test de génération de documentation de <%= import("name.part", ["ruby"])%>.
+Ceci est un test de génération de documentation de <%= import("name")%>.
 
-Et je pourrai aussi inclure <%= import("code.part", []) %>.
+Et je pourrai aussi inclure <%= import("code") %>.
 
-<%= import("gen.part", ["GEN"]) %>
+<%= import("gen") %>
 
-<%= importFeature("erb.part", "erb", ["GEN"]) %>
+<%= import("erb") %>

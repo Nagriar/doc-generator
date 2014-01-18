@@ -1,31 +1,30 @@
 
 class Language
   attr_reader :name
-  attr_reader :featuresLanguage
+  attr_reader :features
   attr_reader :referenceLanguage
   attr_reader :outputDir
 
-  def initialize(config, generalDir)
-    @name = config["name"]
-    @featuresLanguage = config["featuresLanguage"]
-    @referenceLanguage = config["referenceLanguage"]
-    @outputDir = config["outputDir"]
+  def initialize(languageName, languageData, generalDir, features)
+    @name = languageName
+    @features = features
+    @referenceLanguage = languageData["referenceLanguage"]
+    @outputDir = languageData["outputDir"]
     @generalDir = generalDir
   end
 
   def printContent
     puts "name : #{@name}"
-    puts "featuresLanguage : #{@featuresLanguage}"
+    puts "features : #{@features}"
     puts "referenceLanguage : #{@referenceLanguage}"
     puts "outputDir : #{@outputDir}"
   end
 
   def haveFeature?(name)
-    @featuresLanguage.each do |featureName, featureFileIn|
-      if featureName == name
-        return true
-      end
+    if ! @features[name].nil? 
+      return feature[name]["languages"]["ruby"]
     end
+    puts "Error : unknown feature \"#{name}\"."
     return false
   end
 
@@ -35,19 +34,13 @@ class Language
     content = content[0, content.size - 1] #Remove \n
   end
 
-  def import(fileName, languages)
-    if languages.empty? || languages.include?(@name)
-      return importFile(fileName, @referenceLanguage)
-    elsif languages.include?("GEN")
-      return importFile(fileName, @generalDir)
+  def import(featureName)
+    if @features[featureName]["languages"].empty? || @features[featureName]["languages"].include?(@name)
+      return importFile(@features[featureName]["file"], @referenceLanguage)
+    elsif @features[featureName]["languages"].include?("GEN")
+      return importFile(@features[featureName]["file"], @generalDir)
     else
       return ""
-    end
-  end
-
-  def importFeature(fileName, feature, languages)
-    if haveFeature?(feature)
-      import(fileName, languages)
     end
   end
 

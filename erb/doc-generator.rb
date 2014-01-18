@@ -30,22 +30,29 @@ class Generator
     end
   end
 
-  def checkConfigLanguages
-    @config["languages"].each do |language|
-      language["featuresLanguage"].each do |featureName, featureValue|
-        # instr if cond, for oneliners
-        puts "Warning : \"#{featureName}\" does not exist" if @config["templateFiles"][featureName].nil?
+  def checkConfigFeature
+    @config["features"].each do |featureName, feature|
+      feature["languages"].each do |lang|
+        if lang != "GEN" && !File.exist?(File.join(@config["languages"][lang]["referenceLanguage"], feature["file"]))
+          puts "Error : unable to find #{feature["file"]} in #{@config["languages"][lang]["referenceLanguage"]}."
+          exit 2
+        end
       end
-      if language["name"].nil? # ruby-style
+    end
+  end
+
+  def checkConfigLanguages
+    @config["languages"].each do |languageName, languageData|
+      if languageName.nil? # ruby-style
         puts "Error: a language does not have a name"
         exit 2
       end
-      if !File.directory?(language["outputDir"])
-        puts "Error: \"#{language["outputDir"]}\" is not a directory"
+      if !File.directory?(languageData["outputDir"])
+        puts "Error: \"#{languageData["outputDir"]}\" is not a directory"
         exit 2
       end
-      if !File.directory?(language["referenceLanguage"])
-        puts "Error: \"#{language["referenceLanguage"]}\" is not a directory"
+      if !File.directory?(languageData["referenceLanguage"])
+        puts "Error: \"#{languageData["referenceLanguage"]}\" is not a directory"
         exit 2
       end
     end
@@ -54,6 +61,7 @@ class Generator
   def checkConfig
     checkConfigTemplateFiles
     checkConfigLanguages
+    checkConfigFeature
     if !File.directory?(@config["generalDir"])
       puts "Warning : \"#{@config["generalDir"]}\" is not a directory"
     end
@@ -69,12 +77,12 @@ class Generator
 
   def generate
     #TODO Avoir un seul fichier avec les features
-    @config["templateFiles"].each do |featureName, featureFileIn|
-      templateData = File.read(featureFileIn)
-      @config["languages"].each do |language|
-        lang = Language.new(language, @config["generalDir"])
+    @config["templateFiles"].each do |templateName, templateFileIn|
+      templateData = File.read(templateFileIn)
+      @config["languages"].each do |languageName, languageData|
+        lang = Language.new(languageName, languageData, @config["generalDir"], @config["features"])
         template = ERB.new(templateData)
-        fileOut = File.join(lang.outputDir, File.basename(featureFileIn))
+        fileOut = File.join(lang.outputDir, File.basename(templateFileIn))
         File.write(fileOut, template.result(lang.get_binding))
       end
     end
