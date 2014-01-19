@@ -35,28 +35,19 @@ class Generator
     end
   end
 
-  def checkConfigFeature
-    @config["features"].each do |featureName, feature|
-      feature["languages"].each do |lang|
-        if lang != "GEN" && !File.exist?(File.join(@pwd, INCLUDE_DIR, @config["languages"][lang]["referenceLanguage"], feature["file"]))
-          puts "Error: unable to find #{feature["file"]} in #{@config["languages"][lang]["referenceLanguage"]}."
-          exit 2
-        end
-      end
-    end
-  end
-
   def checkConfigLanguages
     @config["languages"].each do |languageName, languageData|
       if languageName.nil? # ruby-style
         puts "Error: a language does not have a name"
         exit 2
       end
-      if !File.directory?(File.join @pwd, INCLUDE_DIR, languageData["outputDir"])
+      languageData["outputDir"] = File.join(@pwd, INCLUDE_DIR, languageData["outputDir"])
+      if !File.directory?(languageData["outputDir"])
         puts "Error: \"#{languageData["outputDir"]}\" is not a directory"
         exit 2
       end
-      if !File.directory?(File.join @pwd, INCLUDE_DIR, languageData["referenceLanguage"])
+      languageData["referenceLanguage"] = File.join(@pwd, INCLUDE_DIR, languageName, "references")
+      if !File.directory?(languageData["referenceLanguage"])
         puts "Error: \"#{languageData["referenceLanguage"]}\" is not a directory"
         exit 2
       end
@@ -66,10 +57,6 @@ class Generator
   def checkConfig
     checkConfigTemplateFiles
     checkConfigLanguages
-    checkConfigFeature
-    if !File.directory?(File.join @pwd, INCLUDE_DIR, @config["commonDir"])
-      puts "Warning: \"#{@config["commonDir"]}\" is not a directory"
-    end
   end
 
   # no parenthesis if no arguments
@@ -85,9 +72,9 @@ class Generator
     @config["templateFiles"].each do |templateName, templateFileIn|
       templateData = File.read(File.join @pwd, INCLUDE_DIR, templateFileIn)
       @config["languages"].each do |languageName, languageData|
-        lang = Language.new(languageName, languageData, File.join(@pwd, INCLUDE_DIR), @config["commonDir"], @config["features"])
+        lang = Language.new(languageName, languageData)
         template = ERB.new(templateData)
-        fileOut = File.join(@pwd, INCLUDE_DIR, lang.outputDir, File.basename(templateFileIn))
+        fileOut = File.join(lang.outputDir, File.basename(templateFileIn))
         File.write(fileOut, template.result(lang.get_binding))
       end
     end

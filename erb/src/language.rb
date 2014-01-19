@@ -1,17 +1,13 @@
 
 class Language
   attr_reader :name
-  attr_reader :features
   attr_reader :referenceLanguage
   attr_reader :outputDir
 
-  def initialize(languageName, languageData, baseDir, commonDir, features)
+  def initialize(languageName, languageData)
     @name = languageName
-    @features = features
     @referenceLanguage = languageData["referenceLanguage"]
-    @baseDir = baseDir
     @outputDir = languageData["outputDir"]
-    @commonDir = commonDir
   end
 
   def printContent
@@ -30,18 +26,16 @@ class Language
   end
 
   def importFile(fileName, dir)
-    fileName = File.join(@baseDir, dir, fileName)
+    fileName = File.join(dir, fileName)
     content = File.read(fileName)
     content = content[0, content.size - 1] #Remove \n
   end
 
-  def import(featureName)
-    if @features[featureName]["languages"].empty? || @features[featureName]["languages"].include?(@name)
-      return importFile(@features[featureName]["file"], @referenceLanguage)
-    elsif @features[featureName]["languages"].include?("GEN")
-      return importFile(@features[featureName]["file"], @commonDir)
+  def import(featureFile, languages, default = "")
+    if languages.empty? || languages.include?(@name)
+      return importFile(featureFile, @referenceLanguage)
     else
-      return ""
+      return default
     end
   end
 
