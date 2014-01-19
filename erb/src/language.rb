@@ -5,10 +5,11 @@ class Language
   attr_reader :referenceLanguage
   attr_reader :outputDir
 
-  def initialize(languageName, languageData, commonDir, features)
+  def initialize(languageName, languageData, baseDir, commonDir, features)
     @name = languageName
     @features = features
     @referenceLanguage = languageData["referenceLanguage"]
+    @baseDir = baseDir
     @outputDir = languageData["outputDir"]
     @commonDir = commonDir
   end
@@ -29,7 +30,7 @@ class Language
   end
 
   def importFile(fileName, dir)
-    fileName = File.join(dir, fileName)
+    fileName = File.join(@baseDir, dir, fileName)
     content = File.read(fileName)
     content = content[0, content.size - 1] #Remove \n
   end

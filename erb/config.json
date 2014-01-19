@@ -1,14 +1,17 @@
 {
   "languages":{
-    "ruby": {"referenceLanguage":"include/ruby/references",
-      "outputDir":"include/ruby/doc"}
+    "ruby": {
+      "referenceLanguage":"ruby/references",
+      "outputDir":"ruby"}
   },
-  "commonDir":"include/common",
+  "commonDir":"common",
   "features":{
     "erb":{"file":"erb.part", "languages":["GEN"]},
     "gen":{"file":"gen.part", "languages":["GEN"]},
     "code":{"file":"code.part", "languages":[]},
     "name":{"file":"name.part", "languages":["ruby"]}
   },
-  "templateFiles":{"template1":"include/templates/file1.doc"}
+  "templateFiles":{
+    "template1":"templates/README.md"
+  }
 }

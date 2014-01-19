@@ -26,7 +26,8 @@ Remarque :
 Fichier de configuration
 ------------------------
 
-  `{
+```json
+  {
     "languages":[
       {"featuresLanguage":{"featureName":1, ...}
       "name":"name",
@@ -36,7 +37,8 @@ Fichier de configuration
     ],
     "generalDir":"generaldir",
     "templateFiles":{"featureName":"featureFile", ...}
-  }`
+  }
+```
 
 
 ERB
@@ -45,8 +47,10 @@ ERB
 Introduction
 ------------
 
-    <% ERB code_ruby %>
-    <%= ERB code_ruby_et_affichage %>
+```html
+  <% ERB code_ruby %>
+  <%= ERB code_ruby_et_affichage %>
+```
 
 
 Fonctions supplémentaires
@@ -54,14 +58,17 @@ Fonctions supplémentaires
 
 ### Import
 
-
-    <%= import(feature) %>
+```html
+  <%= import(feature) %>
+```
 
 Inclut un fichier sans le '\n' final à l'emplacement du import.
 
 ### Import feature
 
-    <%= importFeature(fichier, feature, [lang1, lang2...]) %>
+```html
+  <%= importFeature(fichier, feature, [lang1, lang2...]) %>
+```
 
 Inclut un fichier sans le '\n' final à l'emplacement du import si cette langue supporte la feature(cf : fichier de configuration).
  
@@ -69,7 +76,8 @@ Inclut un fichier sans le '\n' final à l'emplacement du import si cette langue 
 Fichier de configuration
 ------------------------
 
-  `{
+```json
+  {
     "languages":{
       "name" : {
       "referenceLanguage":"referencedir",
@@ -82,6 +90,5 @@ Fichier de configuration
       ...
     },
     "templateFiles":{"featureName":"featureFile", ...}
-  }`
-
-
+  }
+```
