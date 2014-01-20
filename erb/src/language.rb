@@ -39,6 +39,15 @@ class Language
     end
   end
 
+  def putWord(wordsLanguages)
+    if wordsLanguages.include?(@name)
+      return wordsLanguages[@name]
+    else
+      return ""
+    end
+
+  end
+
   def get_binding
     binding
   end

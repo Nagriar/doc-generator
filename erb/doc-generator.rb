@@ -23,6 +23,7 @@ class Generator
       puts "Usage: ./doc-generator pathToConfigFile"
       exit 1
     end
+    @pwd = File.dirname(ARGV[0])
   end
 
   def checkConfigTemplateFiles
