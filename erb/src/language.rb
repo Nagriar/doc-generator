@@ -39,11 +39,11 @@ class Language
     end
   end
 
-  def putWord(wordsLanguages)
+  def putWord(wordsLanguages, default = "")
     if wordsLanguages.include?(@name)
       return wordsLanguages[@name]
     else
-      return ""
+      return default
     end
 
   end
